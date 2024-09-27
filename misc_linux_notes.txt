@@ -1,9 +1,11 @@
 ###############################################################################
 ## Misc Linux notes for myself for convenient access in the cloud
 ###############################################################################
+```
 #####
 #####  tar 
 #####
+```
 tar [cxvftz] tar_file.tar [files/directory to tar]
 
 c – Creates a new .tar archive file

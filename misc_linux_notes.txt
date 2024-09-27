@@ -1,0 +1,320 @@
+###############################################################################
+## Misc Linux notes for myself for convenient access in the cloud
+###############################################################################
+
+#####  tar 
+tar [cxvftz] tar_file.tar [files/directory to tar]
+
+c – Creates a new .tar archive file
+x - untar or extract a tar file
+t - List the contents of a tar file
+v – Verbosely show the .tar file progress
+f – File name type of the archive file
+z - compression
+
+#----------------------------------------------------------------------
+## Creating a tar ball with all the files in directory 'text_files/'
+$ tar cvf tarball.tar text_files/
+a text_files
+a text_files/hex_file.txt
+a text_files/new_file.txt
+a text_files/st.txt
+a text_files/test2.txt
+a text_files/ps1.txt
+a text_files/git_set_config.txt
+a text_files/test.txt
+
+#----------------------------------------------------------------------
+## Listing content of a tar ball
+$ tar tvf tarball.tar
+drwxr-xr-x  0 user1 staff       0 27 Sep 13:38 text_files/
+-rw-r--r--  0 user1 staff      23 27 Sep 13:35 text_files/hex_file.txt
+-rw-r--r--  0 user1 staff     649 27 Sep 13:35 text_files/new_file.txt
+-rw-r--r--  0 user1 staff      50 27 Sep 13:35 text_files/st.txt
+-rw-r--r--  0 user1 staff     682 27 Sep 13:35 text_files/test2.txt
+-rw-r--r--  0 user1 staff     208 27 Sep 13:35 text_files/ps1.txt
+-rw-r--r--  0 user1 staff     254 27 Sep 13:35 text_files/git_set_config.txt
+-rw-r--r--  0 user1 staff     621 27 Sep 13:35 text_files/test.txt
+
+#----------------------------------------------------------------------
+## Extracting files from a tar ball
+## note:  extracting a tar ball overwrites existing files with same name ( see notes )
+
+$ tar xvf tarball.tar
+x text_files/
+x text_files/hex_file.txt
+x text_files/new_file.txt
+x text_files/st.txt
+x text_files/test2.txt
+x text_files/ps1.txt
+x text_files/git_set_config.txt
+x text_files/test.txt
+
+#----------------------------------------------------------------------
+
+man page: https://man7.org/linux/man-pages/man1/tar.1.html
+
+notes:
+Sometimes useful when extracting -> x 
+       -k, --keep-old-files
+              Don't replace existing files when extracting.
+
+       --keep-newer-files
+              Don't replace existing files that are newer than their
+              archive copies.
+
+
+###############################################################################
+
+#####  grep
+grep - print lines that match patterns
+The grep utility searches any given input files, selecting lines that match one or more patterns.
+
+
+$ grep andrea filename.txt
+Wed Aug 7 15:36:16 GMT 2015 *OK* user:andrea.lambert door:d37
+
+
+## grep and or
+# OR - print lines that have the text 'some1' OR 'some2' in a line
+$ grep -E 'some1|some2' filename.txt 
+
+# AND - print lines that have one or both words in a line
+$ grep -E 'some1.*some2' filename.txt
+
+# Print all lines except blank lines and comments
+$ grep -v -E '^$|^#' filename.txt
+
+# print all lines that have the words Alarm AND simon on the same line
+$ grep -E 'Alarm.*simon' filename.txt
+
+# print all lines that have the text andrea OR simon on any given line
+$ grep -E 'andre|simon' filename.txt
+
+# print all lines that DON'T have the words kimberly OR richard on any given line ( -v )
+$ grep -v -E 'kimberly|richard' filename.txt
+
+
+man page: https://man7.org/linux/man-pages/man1/grep.1.html
+#----------------------------------------------------------------------
+###############################################################################
+##### Print text with echo and tr
+
+## Print text on stdout
+$ echo Student
+Student
+
+## Print text on stdout, all words on one line
+$ echo Student0{1..5}
+Student01 Student02 Student03 Student04 Student05
+
+## Print text on stdout, one word on each line with tr command
+$ echo Student0{1..5} | tr -cs "[:alnum:]" "\n"
+Student01
+Student02
+Student03
+Student04
+Student05
+#----------------------------------------------------------------------
+man page: 
+https://man7.org/linux/man-pages/man1/echo.1.html
+https://man7.org/linux/man-pages/man1/tr.1.html
+#----------------------------------------------------------------------
+###############################################################################
+##### Print and sort by columns
+
+#----------------------------------------------------------------------
+## This is the file we are using
+
+$ cat column_file.txt
+Wed Aug 7 15:28:45 GMT 2015 *OK* user:carolyn.hardacre door:d34
+Wed Aug 7 15:31:53 GMT 2015 *OK* user:chloe.simpson door:d56
+Wed Aug 7 15:36:16 GMT 2015 *OK* user:andrea.lambert door:d37
+Wed Aug 7 15:38:05 GMT 2015 *OK* user:pippa.payne door:d49
+Wed Aug 7 15:39:27 GMT 2015 *OK* user:chloe.simpson door:d17
+Wed Aug 7 15:41:12 GMT 2015 *OK* user:caroline.newman door:d54
+Wed Aug 7 15:43:06 GMT 2015 *OK* user:kimberly.sutherland door:d57
+Wed Aug 7 15:43:46 GMT 2015 *OK* user:richard.reid door:d10
+Wed Aug 7 15:46:08 GMT 2015 *OK* user:angela.thomson door:d31
+Wed Aug 7 15:50:39 GMT 2015 *OK* user:michael.martin door:d50
+#----------------------------------------------------------------------
+## Sort the lines by the door number column 
+# using the sort command and the : as a separator between columns
+
+$ cat column_file.txt| sort -t: -k5
+Wed Aug 7 15:43:46 GMT 2015 *OK* user:richard.reid door:d10
+Wed Aug 7 15:39:27 GMT 2015 *OK* user:chloe.simpson door:d17
+Wed Aug 7 15:46:08 GMT 2015 *OK* user:angela.thomson door:d31
+Wed Aug 7 15:28:45 GMT 2015 *OK* user:carolyn.hardacre door:d34
+Wed Aug 7 15:36:16 GMT 2015 *OK* user:andrea.lambert door:d37
+Wed Aug 7 15:38:05 GMT 2015 *OK* user:pippa.payne door:d49
+Wed Aug 7 15:50:39 GMT 2015 *OK* user:michael.martin door:d50
+Wed Aug 7 15:41:12 GMT 2015 *OK* user:caroline.newman door:d54
+Wed Aug 7 15:31:53 GMT 2015 *OK* user:chloe.simpson door:d56
+Wed Aug 7 15:43:06 GMT 2015 *OK* user:kimberly.sutherland door:d57
+#----------------------------------------------------------------------
+## Print the names using awk with space as a separtor between columns
+# and then pipe again into awk with : as a separator
+
+$ cat column_file.txt | awk '{print $8}' | awk -F: '{print $2}'
+carolyn.hardacre
+chloe.simpson
+andrea.lambert
+pippa.payne
+chloe.simpson
+caroline.newman
+kimberly.sutherland
+richard.reid
+angela.thomson
+michael.martin
+
+#----------------------------------------------------------------------
+
+###############################################################################
+##### Word Count - wc
+wc - print newline, word, and byte counts for each file
+
+$ wc column_file.txt
+ 10  90 621 column_file.txt
+
+ The file has:
+ 10 lines
+ 90 words
+ 621 bytes/characters
+
+ $ ls -la column_file.txt
+ -rw-r--r-- 1 user1 staff 621 Sep 27 16:41 column_file.txt
+
+
+$ wc -l column_file.txt
+10 column_file.txt
+
+$ wc -w column_file.txt
+90 column_file.txt
+
+$ wc -c column_file.txt
+621 column_file.txt
+
+###############################################################################
+##### head and tail of files
+head - output the first part of files
+tail - output the last part of files
+
+$ cat -b column_file.txt
+     1	Wed Aug 7 15:28:45 GMT 2015 *OK* user:carolyn.hardacre door:d34
+     2	Wed Aug 7 15:31:53 GMT 2015 *OK* user:chloe.simpson door:d56
+     3	Wed Aug 7 15:36:16 GMT 2015 *OK* user:andrea.lambert door:d37
+     4	Wed Aug 7 15:38:05 GMT 2015 *OK* user:pippa.payne door:d49
+     5	Wed Aug 7 15:39:27 GMT 2015 *OK* user:chloe.simpson door:d17
+     6	Wed Aug 7 15:41:12 GMT 2015 *OK* user:caroline.newman door:d54
+     7	Wed Aug 7 15:43:06 GMT 2015 *OK* user:kimberly.sutherland door:d57
+     8	Wed Aug 7 15:43:46 GMT 2015 *OK* user:richard.reid door:d10
+     9	Wed Aug 7 15:46:08 GMT 2015 *OK* user:angela.thomson door:d31
+    10	Wed Aug 7 15:50:39 GMT 2015 *OK* user:michael.martin door:d50
+
+## Print the first 4 lines of the file
+$ head -4 column_file.txt
+Wed Aug 7 15:28:45 GMT 2015 *OK* user:carolyn.hardacre door:d34
+Wed Aug 7 15:31:53 GMT 2015 *OK* user:chloe.simpson door:d56
+Wed Aug 7 15:36:16 GMT 2015 *OK* user:andrea.lambert door:d37
+Wed Aug 7 15:38:05 GMT 2015 *OK* user:pippa.payne door:d49
+
+## Print the last 4 lines of the file
+$ tail -4 column_file.txt
+Wed Aug 7 15:43:06 GMT 2015 *OK* user:kimberly.sutherland door:d57
+Wed Aug 7 15:43:46 GMT 2015 *OK* user:richard.reid door:d10
+Wed Aug 7 15:46:08 GMT 2015 *OK* user:angela.thomson door:d31
+Wed Aug 7 15:50:39 GMT 2015 *OK* user:michael.martin door:d50
+
+## Print lines 4 to 7 of the file
+$ head -7 column_file.txt | tail -4
+Wed Aug 7 15:38:05 GMT 2015 *OK* user:pippa.payne door:d49
+Wed Aug 7 15:39:27 GMT 2015 *OK* user:chloe.simpson door:d17
+Wed Aug 7 15:41:12 GMT 2015 *OK* user:caroline.newman door:d54
+Wed Aug 7 15:43:06 GMT 2015 *OK* user:kimberly.sutherland door:d57
+
+man page:
+https://man7.org/linux/man-pages/man1/head.1.html
+https://man7.org/linux/man-pages/man1/tail.1.html
+###############################################################################
+#####  hexdump
+hexdump – ASCII, decimal, hexadecimal, octal dump
+
+note:  This works for me in the bash shell
+$ /bin/bash
+
+#----------------------------------------------------------------------
+## Create a text file with tabs, spaces, newlines and characters
+$ echo -e "Hello\n\t \n  \n\t\n\n\nworld\n" > hex_file.txt
+#----------------------------------------------------------------------
+## Print the file as ascii with the cat command
+$ cat hex_file.txt
+Hello
+	 
+  
+	
+
+
+
+world
+#----------------------------------------------------------------------
+## Print the file with hex+ASCII characters ( -C )
+$ hexdump -C  hex_file.txt 
+
+00000000  48 65 6c 6c 6f 0a 09 20  0a 20 20 0a 09 0a 0a 0a  |Hello.. .  .....|
+
+00000010  77 6f 72 6c 64 0a 0a                              |world..|
+
+00000017
+#----------------------------------------------------------------------
+Translating from hex to ascii as seen in the hexdump output
+48 - H
+65 - e
+6c - l
+6c - l
+6f - o
+0a - NewLine/NewFeed
+20 - space
+20 - space
+0a - Newline/Newfeed
+09 - Horizontal tab
+0a - Newline/Newfeed
+0a - Newline/Newfeed
+0a - Newline/Newfeed
+77 - w
+6f - o
+72 - r
+6c - l
+64 - d
+0a - Newline/Newfeed
+
+man page: https://man7.org/linux/man-pages/man1/hexdump.1.html
+###############################################################################
+#----------------------------------------------------------------------
+
+###############################################################################
+#----------------------------------------------------------------------
+
+###############################################################################
+##### TMAX, TMIN, signed and unsigned
+See here for context: https://www.cs.utexas.edu/~fussell/courses/cs429h/lectures/Lecture_3-429h.pdf
+
+            Tmax	Tmin
+Unsigned    127     -128
+Signed      255     0
+
+
+
+        Decimal     Binary      Hex
+Zero        0       0		    0
+TMAX        127     1111111     0x7F	
+TMIN        -128	10000000	0x80	
+-TMIN       128	    10000000	0x80    unsigned	
+TMAX + 3	130     10000010	0x82	unsigned
+TMAX + 3	-126	10000010	0x82	signed
+
+Useful converters:
+https://onlinetoolz.net/unsigned-signed
+https://www.rapidtables.com/convert/number/decimal-to-hex.html
+
+###############################################################################

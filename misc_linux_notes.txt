@@ -1,8 +1,9 @@
 ###############################################################################
 ## Misc Linux notes for myself for convenient access in the cloud
 ###############################################################################
-
+#####
 #####  tar 
+#####
 tar [cxvftz] tar_file.tar [files/directory to tar]
 
 c – Creates a new .tar archive file
@@ -66,7 +67,9 @@ Sometimes useful when extracting -> x
 
 ###############################################################################
 
+#####
 #####  grep
+#####
 grep - print lines that match patterns
 The grep utility searches any given input files, selecting lines that match one or more patterns.
 
@@ -98,7 +101,9 @@ $ grep -v -E 'kimberly|richard' filename.txt
 man page: https://man7.org/linux/man-pages/man1/grep.1.html
 #----------------------------------------------------------------------
 ###############################################################################
+#####
 ##### Print text with echo and tr
+#####
 
 ## Print text on stdout
 $ echo Student
@@ -121,7 +126,9 @@ https://man7.org/linux/man-pages/man1/echo.1.html
 https://man7.org/linux/man-pages/man1/tr.1.html
 #----------------------------------------------------------------------
 ###############################################################################
+#####
 ##### Print and sort by columns
+#####
 
 #----------------------------------------------------------------------
 ## This is the file we are using
@@ -169,9 +176,11 @@ angela.thomson
 michael.martin
 
 #----------------------------------------------------------------------
-
+man page: https://man7.org/linux/man-pages/man1/sort.1.html
 ###############################################################################
+#####
 ##### Word Count - wc
+#####
 wc - print newline, word, and byte counts for each file
 
 $ wc column_file.txt
@@ -196,7 +205,10 @@ $ wc -c column_file.txt
 621 column_file.txt
 
 ###############################################################################
+#####
 ##### head and tail of files
+#####
+
 head - output the first part of files
 tail - output the last part of files
 
@@ -237,7 +249,10 @@ man page:
 https://man7.org/linux/man-pages/man1/head.1.html
 https://man7.org/linux/man-pages/man1/tail.1.html
 ###############################################################################
+#####
 #####  hexdump
+#####
+
 hexdump – ASCII, decimal, hexadecimal, octal dump
 
 note:  This works for me in the bash shell
@@ -289,14 +304,12 @@ Translating from hex to ascii as seen in the hexdump output
 0a - Newline/Newfeed
 
 man page: https://man7.org/linux/man-pages/man1/hexdump.1.html
-###############################################################################
-#----------------------------------------------------------------------
 
 ###############################################################################
-#----------------------------------------------------------------------
-
-###############################################################################
+#####
 ##### TMAX, TMIN, signed and unsigned
+#####
+
 See here for context: https://www.cs.utexas.edu/~fussell/courses/cs429h/lectures/Lecture_3-429h.pdf
 
             Tmax	Tmin
